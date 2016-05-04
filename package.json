@@ -1,6 +1,6 @@
 {
   "name": "noes",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Javascript conjunction library",
   "main": "lib/index.js",
   "scripts": {
