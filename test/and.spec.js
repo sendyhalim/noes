@@ -45,6 +45,8 @@ describe('`And` Conjunction', () => {
 
         it('should not be satisfied when one of the inputs does not match', () => {
           const result = and.satisfied({
+            tywin: 'lannister',
+            day: 'light',
             game: 'of-thrones'
           });
 
