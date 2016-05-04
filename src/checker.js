@@ -15,7 +15,7 @@ const createEqualInputChecker = (conjunction, inputObj) => {
 
     // Nested conjunction
     if (Conjunction.isConjunction(mappingValue)) {
-      return mappingValue.satisfied(inputValue);
+      return mappingValue.satisfied(inputObj);
     } else if (Conjunction.shouldCreateConjunction(mappingValue)) {
       return index.create(mappingValue).satisfied(inputObj);
     } else if (R.isArrayLike(mappingValue)) {
