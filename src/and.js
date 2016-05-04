@@ -13,7 +13,7 @@ class And extends Conjunction {
   }
 
   /**
-   * Check if the given object satisfied the mappings
+   * Check if the given object satisfy the mappings
    * @param {Object} inputObj
    * @returns {Boolean}
    */
