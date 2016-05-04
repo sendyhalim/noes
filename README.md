@@ -32,7 +32,7 @@ or.satisfied({
 ```
 
 #### And
-```
+```js
 import noes from 'noes';
 
 const and = new conjunction.And({
@@ -54,7 +54,7 @@ and.satisfied({
 and.satisfied({}) // false
 ```
 
-## Array value
+#### Array value
 When the given mapping value is an array, then it will be satisfied if the given input matches one of the array values. Example:
 
 ```js
