@@ -1,6 +1,13 @@
 # Noes
 `Noes` is a javascript library that checks if its conjunction is satisfied.
 
+[![Build Status](https://travis-ci.org/sendyhalim/noes.svg)](https://travis-ci.org/sendyhalim/noes)
+[![npm version](https://badge.fury.io/js/noes.svg)](https://badge.fury.io/js/noes)
+
+## Installation
+```
+npm install noes --save
+```
 
 ## Quick usage
 
