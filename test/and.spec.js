@@ -80,7 +80,7 @@ describe('`And` Conjunction', () => {
       });
     });
 
-    context('when the conjunction is nested 1 level', () => {
+    context('when the conjunction is nested 1 level with object', () => {
       context('and the nested `And` conjunction has only 1 value', () => {
         context('which the nested mapping has different mapping key with its parent', () => {
           const and = new conjunction.And({
@@ -196,6 +196,127 @@ describe('`And` Conjunction', () => {
                 lannister: 'approves'
               }
             }
+          });
+
+          it('should only be satisfied when all of the inputs match', () => {
+            const result = and.satisfied({
+              ye: 'teur',
+              lannister: 'approves'
+            });
+
+            expect(result).to.be.true;
+          });
+
+          it('should not be satisfied when one of the input does not match the inner mappings', () => {
+            const result = and.satisfied({
+              ye: 'teu',
+              lannister: 'approves'
+            });
+
+            expect(result).to.be.false;
+          });
+        });
+      });
+    });
+
+
+    context('when the conjunction is nested 1 level with `And` instance', () => {
+      context('and the nested `And` conjunction has only 1 value', () => {
+        context('which the nested mapping has different mapping key with its parent', () => {
+          const and = new conjunction.And({
+            name: new conjunction.And({ye: 'ha'})
+          });
+
+          it('should be satisfied', () => {
+            const result = and.satisfied({name: 'sss', ye: 'ha'});
+
+            expect(result).to.be.true;
+          });
+
+          it('should not be satisfied', () => {
+            const result = and.satisfied({name: 'zzz', ye: 'h'});
+
+            expect(result).to.be.false;
+          });
+        });
+
+        context('which the nested mapping has the same mapping key with its parent', () => {
+          const and = new conjunction.And({
+            name: new conjunction.And({name: 'wut'})
+          });
+
+          it('should be satisfied', () => {
+            const result = and.satisfied({name: 'wut'});
+
+            expect(result).to.be.true;
+          });
+
+          it('should not be satisfied', () => {
+            const result = and.satisfied({name: 'wat'});
+
+            expect(result).to.be.false;
+          });
+        });
+      });
+
+      context('and the nested `And` conjunction has 2 possible values', () => {
+        context('which the nested mapping has different mapping key with its parent', () => {
+          const and = new conjunction.And({
+            name: new conjunction.And({
+              ye: 'ha',
+              lannister: 'approves'
+            })
+          });
+
+          it('should be satisfied when all of the inputs match', () => {
+            const result = and.satisfied({
+              ye: 'ha',
+              lannister: 'approves'
+            });
+
+            expect(result).to.be.true;
+          });
+
+          it('should not be satisfied when one of input does not match the inner mappings', () => {
+            const result = and.satisfied({ye: 'h', lannister: 'approves'});
+
+            expect(result).to.be.false;
+          });
+        });
+
+        context('which the nested mapping has the same mapping key with its parent', () => {
+          const and = new conjunction.And({
+            name: new conjunction.And({
+              name: 'wut',
+              ice: 'cream'
+            })
+          });
+
+          it('should only be satisfied when all of the inputs match', () => {
+            const result = and.satisfied({
+              name: 'wut',
+              ice: 'cream'
+            });
+
+            expect(result).to.be.true;
+          });
+
+          it('should not be satisfied when one of the input does not match the inner mappings', () => {
+            const result = and.satisfied({
+              name: 'wut',
+              ice: 'sandwich'
+            });
+
+            expect(result).to.be.false;
+          });
+        });
+
+        context('which the mapping value is an array', () => {
+          const and = new conjunction.And({
+            name: new conjunction.And({
+              ye: ['sabo', 'teur'],
+              lannister: 'approves'
+            })
           });
 
           it('should only be satisfied when all of the inputs match', () => {
