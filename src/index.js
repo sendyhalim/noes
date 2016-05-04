@@ -1,6 +1,7 @@
 import R from 'ramda';
 import And from './and';
 import Or from './or';
+import Conjunction from './conjunction';
 
 /**
  * Check if the given object is an object-like `And` conjunction.
@@ -39,5 +40,6 @@ const create = obj => {
 export default {
   create,
   And,
-  Or
+  Or,
+  Conjunction
 };
