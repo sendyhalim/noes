@@ -33,6 +33,12 @@ describe('`Or` Conjunction', () => {
           expect(result).to.be.true;
         });
 
+        it('should not be satisfied when given empty object', () => {
+          const result = or.satisfied({});
+
+          expect(result).to.be.false;
+        });
+
         it('should not be satisfied when all of the inputs do not match', () => {
           const result = or.satisfied({
             tywin: 'lanniser',

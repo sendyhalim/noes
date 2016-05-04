@@ -27,6 +27,12 @@ describe('`And` Conjunction', () => {
           game: 'of thrones'
         });
 
+        it('should not be satisfied when given empty object', () => {
+          const result = and.satisfied({});
+
+          expect(result).to.be.false;
+        });
+
         it('should only be satisfied when all of the inputs match', () => {
           const result = and.satisfied({
             tywin: 'lannister',
