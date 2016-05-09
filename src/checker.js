@@ -21,7 +21,7 @@ const createEqualInputChecker = (conjunction, inputObj) => {
     } else if (R.isArrayLike(mappingValue)) {
       return mappingValue.indexOf(inputValue) > -1;
     } else {
-      return inputValue === mappingValue;
+      return conjunction.valueIsSatisfied(inputValue, mappingValue);
     }
   };
 };

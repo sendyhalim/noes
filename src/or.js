@@ -7,8 +7,8 @@ import checker from './checker';
  * @author Sendy Halim <sendyhalim93@gmail.com>
  */
 class Or extends Conjunction {
-  constructor(mappings) {
-    super(mappings);
+  constructor(mappings, options) {
+    super(mappings, options);
     this.type = Or.type();
   }
 

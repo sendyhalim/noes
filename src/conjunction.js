@@ -5,8 +5,16 @@ import R from 'ramda';
  * @author Sendy Halim <sendyhalim93@gmail.com>
  */
 class Conjunction {
-  constructor(mappings) {
+  constructor(mappings, options) {
     this.mappings = mappings;
+
+    const defaultOptions = {
+      valueIsSatisfied: R.equals
+    };
+
+    const _options = R.merge(defaultOptions, options);
+
+    this.valueIsSatisfied = _options.valueIsSatisfied;
   }
 
   /**
