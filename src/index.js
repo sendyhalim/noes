@@ -37,9 +37,11 @@ const create = obj => {
   }
 }
 
-export default {
+module.exports = {
   create,
   And,
   Or,
   Conjunction
 };
+
+export default module.exports
