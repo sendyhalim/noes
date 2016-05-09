@@ -10,13 +10,15 @@ class Conjunction {
 
     const defaultOptions = {
       valueIsSatisfied: R.equals,
-      getInputValue: R.prop
+      getInputValue: R.prop,
+      getMappingValue: R.prop
     };
 
     const _options = R.merge(defaultOptions, options);
 
     this.valueIsSatisfied = _options.valueIsSatisfied;
     this.getInputValue = _options.getInputValue;
+    this.getMappingValue = _options.getMappingValue;
   }
 
   /**
