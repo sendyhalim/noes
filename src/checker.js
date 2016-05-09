@@ -11,7 +11,7 @@ import index from './';
 const createEqualInputChecker = (conjunction, inputObj) => {
   return mappingKey => {
     const mappingValue = R.prop(mappingKey, conjunction.mappings);
-    const inputValue = R.prop(mappingKey, inputObj);
+    const inputValue = conjunction.getInputValue(mappingKey, inputObj);
 
     // Nested conjunction
     if (Conjunction.isConjunction(mappingValue)) {
