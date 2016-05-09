@@ -26,11 +26,11 @@ const objectIsOrConjunction = R.compose(
   R.prop('type')
 );
 
-const create = obj => {
+const create = (obj, options) => {
   if (objectIsOrConjunction(obj)) {
-    return new Or(obj.mappings);
+    return new Or(obj.mappings, options);
   } else if (objectIsAndConjunction(obj)) {
-    return new And(obj.mappings);
+    return new And(obj.mappings, options);
   } else {
     var message = 'Cannot create conjunction based on ' + obj;
     throw new Error(message);
