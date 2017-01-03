@@ -3,14 +3,17 @@ import R from 'ramda';
 import Conjunction from './conjunction';
 import index from './';
 
+type Checker = Object => boolean
+
 /**
  * Create a function that will check whether the given input object
  * match the mappings
+ * @param {ConjunctionObject} conjunction
  * @param {Object<String, Any>} inputObj
- * @returns {Boolean}
+ * @returns {Function}
  */
-const createEqualInputChecker = (conjunction, inputObj) => {
-  return mappingKey => {
+const createEqualInputChecker = (conjunction: Conjunction, inputObj: Object): Checker => {
+  return (mappingKey: Object): boolean => {
     const mappingValue = conjunction.getMappingValue(mappingKey, conjunction.mappings);
     const inputValue = conjunction.getInputValue(mappingKey, inputObj);
 

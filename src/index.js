@@ -4,18 +4,14 @@ import And from './and';
 import Or from './or';
 import Conjunction from './conjunction';
 
-type ConjuctionObject = {
-  type: string,
-  mappings: ConjuctionObject
-};
+import type {ConjunctionObject} from './conjunction';
 
 /**
  * Check if the given object is an object-like `And` conjunction.
- * @param {Object} obj
- * @param {String} obj.type
+ * @param {ConjunctionObject} obj
  * @returns {Boolean}
  */
-const objectIsAndConjunction: (ConjuctionObject) => boolean = R.compose(
+const objectIsAndConjunction: (ConjunctionObject) => boolean = R.compose(
   R.equals(And.type()),
   R.prop('type')
 );
@@ -23,22 +19,21 @@ const objectIsAndConjunction: (ConjuctionObject) => boolean = R.compose(
 
 /**
  * Check if the given object is an object-like `Or` conjunction.
- * @param {Object} obj
- * @param {String} obj.type
+ * @param {ConjunctionObject} obj
  * @returns {Boolean}
  */
-const objectIsOrConjunction: (ConjuctionObject) => boolean = R.compose(
+const objectIsOrConjunction: (ConjunctionObject) => boolean = R.compose(
   R.equals(Or.type()),
   R.prop('type')
 );
 
-const create = (obj: ConjunctionObject, options) => {
+const create = (obj: ConjunctionObject, options?: Object): Object => {
   if (objectIsOrConjunction(obj)) {
     return new Or(obj.mappings, options);
   } else if (objectIsAndConjunction(obj)) {
     return new And(obj.mappings, options);
   } else {
-    var message = 'Cannot create conjunction based on ' + obj;
+    var message = 'Cannot create conjunction based on ' + JSON.stringify(obj, null, 2);
     throw new Error(message);
   }
 }
@@ -50,4 +45,4 @@ module.exports = {
   Conjunction
 };
 
-export default module.exports
+export default module.exports;

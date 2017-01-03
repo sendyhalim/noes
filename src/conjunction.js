@@ -1,12 +1,29 @@
 // @flow
 import R from 'ramda';
 
+export type ConjunctionOptions = {
+  valueIsSatisfied?: Function,
+  getInputValue?: Function,
+  getMappingValue: Function
+};
+
+export type ConjunctionObject = {
+  type: string,
+  mappings: ConjunctionObject
+};
+
+
 /**
  * @constructor
  * @author Sendy Halim <sendyhalim93@gmail.com>
  */
 class Conjunction {
-  constructor(mappings, options) {
+  mappings: Object;
+  valueIsSatisfied: Function;
+  getInputValue: Function;
+  getMappingValue: Function;
+
+  constructor(mappings: Object, options?: ConjunctionOptions) {
     this.mappings = mappings;
 
     const defaultOptions = {
@@ -27,7 +44,7 @@ class Conjunction {
    * @param {Object} obj
    * @returns {Boolean}
    */
-  static isConjunction(obj) {
+  static isConjunction(obj: Object): boolean {
     return obj instanceof Conjunction;
   }
 
@@ -38,11 +55,11 @@ class Conjunction {
    * @param {Object} obj.mappings
    * @returns {Boolean}
    */
-  static shouldCreateConjunction(obj) {
+  static shouldCreateConjunction(obj: Object): boolean {
     return !Conjunction.isConjunction(obj) &&
       R.has('type', obj) &&
       R.has('mappings', obj);
   }
 }
 
-export default Conjunction;
+export default Conjunction
