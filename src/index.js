@@ -1,7 +1,13 @@
+// @flow
 import R from 'ramda';
 import And from './and';
 import Or from './or';
 import Conjunction from './conjunction';
+
+type ConjuctionObject = {
+  type: string,
+  mappings: ConjuctionObject
+};
 
 /**
  * Check if the given object is an object-like `And` conjunction.
@@ -9,7 +15,7 @@ import Conjunction from './conjunction';
  * @param {String} obj.type
  * @returns {Boolean}
  */
-const objectIsAndConjunction = R.compose(
+const objectIsAndConjunction: (ConjuctionObject) => boolean = R.compose(
   R.equals(And.type()),
   R.prop('type')
 );
@@ -21,12 +27,12 @@ const objectIsAndConjunction = R.compose(
  * @param {String} obj.type
  * @returns {Boolean}
  */
-const objectIsOrConjunction = R.compose(
+const objectIsOrConjunction: (ConjuctionObject) => boolean = R.compose(
   R.equals(Or.type()),
   R.prop('type')
 );
 
-const create = (obj, options) => {
+const create = (obj: ConjunctionObject, options) => {
   if (objectIsOrConjunction(obj)) {
     return new Or(obj.mappings, options);
   } else if (objectIsAndConjunction(obj)) {

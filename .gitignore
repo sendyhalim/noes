@@ -6,3 +6,4 @@ lib/
 # Ignored files
 npm-debug.log
 .DS_Store
+.tern-port

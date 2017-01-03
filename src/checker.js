@@ -1,3 +1,4 @@
+// @flow
 import R from 'ramda';
 import Conjunction from './conjunction';
 import index from './';
