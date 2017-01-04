@@ -52,7 +52,9 @@ describe('`Or` Conjunction', () => {
       });
 
       context('and the given mappings value is an array', () => {
-        const or = new conjunction.Or({name: ['hi', 'there']});
+        const or = new conjunction.Or({
+          name: [{$equal: 'hi'}, {$equal: 'there'}]
+        });
 
         it('should be satisfied when one of the input matches', () => {
           const result = or.satisfied({name: 'there'});
@@ -174,7 +176,7 @@ describe('`Or` Conjunction', () => {
             name: {
               type: 'or',
               mappings: {
-                ye: ['sabo', 'teur'],
+                ye: [{$equal: 'sabo'}, {$equal: 'teur'}],
                 lannister: 'approves'
               }
             }
@@ -281,7 +283,7 @@ describe('`Or` Conjunction', () => {
         context('which the mapping value is an array', () => {
           const or = new conjunction.Or({
             name: new conjunction.Or({
-              ye: ['sabo', 'teur'],
+              ye: [{$equal: 'sabo'}, {$equal: 'teur'}],
               lannister: 'approves'
             })
           });

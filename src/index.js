@@ -2,7 +2,7 @@
 import R from 'ramda';
 import And from './and';
 import Or from './or';
-import Conjunction from './conjunction';
+import {Conjunction} from './conjunction';
 
 import type {ConjunctionObject} from './conjunction';
 

@@ -16,7 +16,7 @@ describe('Conjunction', () => {
     });
 
     context('given >', () => {
-      it('should return gt function', () => {
+      it('should return greaterThan function', () => {
         const f = getPredicateFunction('>');
 
         expect(f(11, 10)).to.be.true;
@@ -24,9 +24,9 @@ describe('Conjunction', () => {
       });
     });
 
-    context('given $gt', () => {
-      it('should return gt function', () => {
-        const f = getPredicateFunction('$gt');
+    context('given $greaterThan', () => {
+      it('should return greaterThan function', () => {
+        const f = getPredicateFunction('$greaterThan');
 
         expect(f(11, 10)).to.be.true;
         expect(f(10, 10)).to.be.false;
@@ -34,7 +34,7 @@ describe('Conjunction', () => {
     });
 
     context('given >=', () => {
-      it('should return gte function', () => {
+      it('should return greaterThanOrEqual function', () => {
         const f = getPredicateFunction('>=');
 
         expect(f(11, 10)).to.be.true;
@@ -42,9 +42,9 @@ describe('Conjunction', () => {
       });
     });
 
-    context('given $gte', () => {
-      it('should return gte function', () => {
-        const f = getPredicateFunction('$gte');
+    context('given $greaterThanOrEqual', () => {
+      it('should return greaterThanOrEqual function', () => {
+        const f = getPredicateFunction('$greaterThanOrEqual');
 
         expect(f(11, 10)).to.be.true;
         expect(f(10, 10)).to.be.true;
@@ -52,7 +52,7 @@ describe('Conjunction', () => {
     });
 
     context('given ===', () => {
-      it('should return eq function', () => {
+      it('should return equal function', () => {
         const f = getPredicateFunction('===');
 
         expect(f(10, 10)).to.be.true;
@@ -60,9 +60,9 @@ describe('Conjunction', () => {
       });
     });
 
-    context('given $eq', () => {
-      it('should return eq function', () => {
-        const f = getPredicateFunction('$eq');
+    context('given $equal', () => {
+      it('should return equal function', () => {
+        const f = getPredicateFunction('$equal');
 
         expect(f(10, 10)).to.be.true;
         expect(f(9, 10)).to.be.false;
@@ -70,7 +70,7 @@ describe('Conjunction', () => {
     });
 
     context('given !==', () => {
-      it('should return neq function', () => {
+      it('should return notEqual function', () => {
         const f = getPredicateFunction('!==');
 
         expect(f(7, 10)).to.be.true;
@@ -78,9 +78,9 @@ describe('Conjunction', () => {
       });
     });
 
-    context('given $neq', () => {
-      it('should return neq function', () => {
-        const f = getPredicateFunction('$neq');
+    context('given $notEqual', () => {
+      it('should return notEqual function', () => {
+        const f = getPredicateFunction('$notEqual');
 
         expect(f(7, 10)).to.be.true;
         expect(f(10, 10)).to.be.false;
@@ -88,7 +88,7 @@ describe('Conjunction', () => {
     });
 
     context('given <', () => {
-      it('should return lt function', () => {
+      it('should return lessThan function', () => {
         const f = getPredicateFunction('<');
 
         expect(f(9, 10)).to.be.true;
@@ -96,9 +96,9 @@ describe('Conjunction', () => {
       });
     });
 
-    context('given $lt', () => {
-      it('should return lt function', () => {
-        const f = getPredicateFunction('$lt');
+    context('given $lessThan', () => {
+      it('should return lessThan function', () => {
+        const f = getPredicateFunction('$lessThan');
 
         expect(f(9, 10)).to.be.true;
         expect(f(10, 10)).to.be.false;
@@ -106,7 +106,7 @@ describe('Conjunction', () => {
     });
 
     context('given <=', () => {
-      it('should return lte function', () => {
+      it('should return lessThanOrEqual function', () => {
         const f = getPredicateFunction('<=');
 
         expect(f(9, 10)).to.be.true;
@@ -114,9 +114,9 @@ describe('Conjunction', () => {
       });
     });
 
-    context('given $lte', () => {
-      it('should return lte function', () => {
-        const f = getPredicateFunction('$lte');
+    context('given $lessThanOrEqual', () => {
+      it('should return lessThanOrEqual function', () => {
+        const f = getPredicateFunction('$lessThanOrEqual');
 
         expect(f(9, 10)).to.be.true;
         expect(f(10, 10)).to.be.true;
@@ -125,7 +125,7 @@ describe('Conjunction', () => {
 
     context('given invalid alias', () => {
       it('should throw error', () => {
-        expect(getPredicateFunction.bind(null, 'lte')).to.throw(Error);
+        expect(getPredicateFunction.bind(null, 'lessThanOrEqual')).to.throw(Error);
       });
     });
   });

@@ -19,19 +19,19 @@ const predicateByAlias: {[id: string]: Function} = {
   '!==': R.compose(R.not, R.equals),
   '<': R.lt,
   '<=': R.lte,
-  '$gt': R.gt,
-  '$gte': R.gte,
-  '$eq': R.equals,
-  '$neq': R.compose(R.not, R.equals),
-  '$lt': R.lt,
-  '$lte': R.lte
+  '$greaterThan': R.gt,
+  '$greaterThanOrEqual': R.gte,
+  '$equal': R.equals,
+  '$notEqual': R.compose(R.not, R.equals),
+  '$lessThan': R.lt,
+  '$lessThanOrEqual': R.lte
 };
 
 /**
  * Get predicate function based on the given predicate
  * @author Sendy Halim <sendyhalim93@gmail.com>
  */
-const getPredicateFunction: (Function | string) => Function = predicate => {
+export const getPredicateFunction: (Function | string) => Function = predicate => {
   if (typeof predicate === 'function') {
     return predicate;
   } else if (R.has(predicate, predicateByAlias)){
@@ -45,7 +45,7 @@ const getPredicateFunction: (Function | string) => Function = predicate => {
  * @constructor
  * @author Sendy Halim <sendyhalim93@gmail.com>
  */
-class Conjunction {
+export class Conjunction {
   mappings: Object;
   valueIsSatisfied: Function;
   getInputValue: Function;
@@ -89,5 +89,3 @@ class Conjunction {
       R.has('mappings', obj);
   }
 }
-
-export default Conjunction

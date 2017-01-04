@@ -57,13 +57,13 @@ describe('`And` Conjunction', () => {
 
       context('and one of the given mappings value is an array', () => {
         const and = new conjunction.And({
-          name: ['hi', 'there'],
+          name: [{$notEqual: 'hi'}, {$notEqual: 'there'}],
           yi: 'pee!'
         });
 
         it('should be satisfied when all of the inputs match', () => {
           const result = and.satisfied({
-            name: 'there',
+            name: 'therez',
             yi: 'pee!'
           });
 
@@ -72,7 +72,7 @@ describe('`And` Conjunction', () => {
 
         it('should not be satisfied when one the input does not match', () => {
           const result = and.satisfied({
-            name: 'thera',
+            name: 'there',
             yi: 'pee!'
           });
 
@@ -193,7 +193,7 @@ describe('`And` Conjunction', () => {
             name: {
               type: 'and',
               mappings: {
-                ye: ['sabo', 'teur'],
+                ye: [{$notEqual: 'sabo'}, {$notEqual: 'teur'}],
                 lannister: 'approves'
               }
             }
@@ -201,7 +201,7 @@ describe('`And` Conjunction', () => {
 
           it('should only be satisfied when all of the inputs match', () => {
             const result = and.satisfied({
-              ye: 'teur',
+              ye: 'teu',
               lannister: 'approves'
             });
 
@@ -210,7 +210,7 @@ describe('`And` Conjunction', () => {
 
           it('should not be satisfied when one of the input does not match the inner mappings', () => {
             const result = and.satisfied({
-              ye: 'teu',
+              ye: 'teur',
               lannister: 'approves'
             });
 
@@ -315,14 +315,14 @@ describe('`And` Conjunction', () => {
         context('which the mapping value is an array', () => {
           const and = new conjunction.And({
             name: new conjunction.And({
-              ye: ['sabo', 'teur'],
+              ye: [{$notEqual: 'sabo'}, {$notEqual: 'teur'}],
               lannister: 'approves'
             })
           });
 
           it('should only be satisfied when all of the inputs match', () => {
             const result = and.satisfied({
-              ye: 'teur',
+              ye: 'teu',
               lannister: 'approves'
             });
 
@@ -331,7 +331,7 @@ describe('`And` Conjunction', () => {
 
           it('should not be satisfied when one of the input does not match the inner mappings', () => {
             const result = and.satisfied({
-              ye: 'teu',
+              ye: 'teur',
               lannister: 'approves'
             });
 
