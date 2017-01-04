@@ -69,6 +69,24 @@ describe('Conjunction', () => {
       });
     });
 
+    context('given !==', () => {
+      it('should return neq function', () => {
+        const f = getPredicateFunction('!==');
+
+        expect(f(7, 10)).to.be.true;
+        expect(f(10, 10)).to.be.false;
+      });
+    });
+
+    context('given $neq', () => {
+      it('should return neq function', () => {
+        const f = getPredicateFunction('$neq');
+
+        expect(f(7, 10)).to.be.true;
+        expect(f(10, 10)).to.be.false;
+      });
+    });
+
     context('given <', () => {
       it('should return lt function', () => {
         const f = getPredicateFunction('<');

@@ -16,11 +16,13 @@ const predicateByAlias: {[id: string]: Function} = {
   '>': R.gt,
   '>=': R.gte,
   '===': R.equals,
+  '!==': R.compose(R.not, R.equals),
   '<': R.lt,
   '<=': R.lte,
   '$gt': R.gt,
   '$gte': R.gte,
   '$eq': R.equals,
+  '$neq': R.compose(R.not, R.equals),
   '$lt': R.lt,
   '$lte': R.lte
 };
