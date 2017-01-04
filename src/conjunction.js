@@ -2,7 +2,7 @@
 import R from 'ramda';
 
 export type ConjunctionOptions = {
-  valueIsSatisfied?: Function,
+  valueIsSatisfied?: Function | String,
   getInputValue?: Function,
   getMappingValue: Function
 };
@@ -12,6 +12,32 @@ export type ConjunctionObject = {
   mappings: ConjunctionObject
 };
 
+const predicateByAlias: {[id: string]: Function} = {
+  '>': R.gt,
+  '>=': R.gte,
+  '===': R.equals,
+  '<': R.lt,
+  '<=': R.lte,
+  '$gt': R.gt,
+  '$gte': R.gte,
+  '$eq': R.equals,
+  '$lt': R.lt,
+  '$lte': R.lte
+};
+
+/**
+ * Get predicate function based on the given predicate
+ * @author Sendy Halim <sendyhalim93@gmail.com>
+ */
+const getPredicateFunction: (Function | string) => Function = predicate => {
+  if (typeof predicate === 'function') {
+    return predicate;
+  } else if (R.has(predicate, predicateByAlias)){
+    return predicateByAlias[predicate];
+  } else {
+    throw new Error(`${predicate} is not a valid predicate`);
+  }
+};
 
 /**
  * @constructor
@@ -34,7 +60,7 @@ class Conjunction {
 
     const _options = R.merge(defaultOptions, options);
 
-    this.valueIsSatisfied = _options.valueIsSatisfied;
+    this.valueIsSatisfied = getPredicateFunction(_options.valueIsSatisfied);
     this.getInputValue = _options.getInputValue;
     this.getMappingValue = _options.getMappingValue;
   }
