@@ -55,14 +55,37 @@ and.satisfied({}) // false
 ```
 
 #### Array value
-When the given mapping value is an array, then it will be satisfied if the given input matches one of the array values. Example:
+When the given mapping value is an array of predicate object,
+then it will be satisfied if the given input satisfies the predicate objects based on its parent's type. Example:
 
 ```js
-const and = new conjunction.And({name: ['hi', 'there'], iron: 'man'});
+const and = new conjunction.And({
+  name: [
+    {$notEqual: 'hi'},
+    {'!==': 'there'}
+  ],
+  iron: 'man'
+});
 
-and.satisfied({name: 'hi', iron: 'man'}) // true
-and.satisfied({name: 'there', iron: 'man'}) // true
+and.satisfied({name: 'hehe', iron: 'man'}) // true
 
+// Will return false because name must not be equal to 'hi' and 'there'
+and.satisfied({name: 'there', iron: 'man'})
+
+
+const or = new conjunction.Or({
+  name: [
+    {$equal: 'hi'},
+    {'===': 'there'}
+  ],
+  iron: 'man'
+});
+
+// Will return true because 'iron' property is satisfied
+or.satisfied({name: 'hehe', iron: 'man'})
+
+// Will return true because name must be equal to 'hi' or 'there'
+or.satisfied({name: 'there', iron: 'man'})
 ```
 
 
