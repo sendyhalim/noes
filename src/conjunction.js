@@ -60,7 +60,7 @@ class Conjunction {
       getMappingValue: R.prop
     };
 
-    const _options = R.merge(defaultOptions, options);
+    const _options = R.mergeWith(R.or, options, defaultOptions);
 
     this.valueIsSatisfied = getPredicateFunction(_options.valueIsSatisfied);
     this.getInputValue = _options.getInputValue;
