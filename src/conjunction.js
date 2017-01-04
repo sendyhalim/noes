@@ -26,6 +26,20 @@ const predicateByAlias: {[id: string]: Function} = {
 };
 
 /**
+ * Get predicate function based on the given predicate
+ * @author Sendy Halim <sendyhalim93@gmail.com>
+ */
+const getPredicateFunction: (Function | string) => Function = predicate => {
+  if (typeof predicate === 'function') {
+    return predicate;
+  } else if (R.has(predicate, predicateByAlias)){
+    return predicateByAlias[predicate];
+  } else {
+    throw new Error(`${predicate} is not a valid predicate`);
+  }
+};
+
+/**
  * @constructor
  * @author Sendy Halim <sendyhalim93@gmail.com>
  */
@@ -46,14 +60,7 @@ class Conjunction {
 
     const _options = R.merge(defaultOptions, options);
 
-    if (R.is(Function, _options.valueIsSatisfied)) {
-      this.valueIsSatisfied = _options.valueIsSatisfied;
-    } else if (R.has(_options.valueIsSatisfied, predicateByAlias)){
-      this.valueIsSatisfied = predicateByAlias[_options.valueIsSatisfied];
-    } else {
-      throw new Error(`${_options.valueIsSatisfied} is not valid`);
-    }
-
+    this.valueIsSatisfied = getPredicateFunction(_options.valueIsSatisfied);
     this.getInputValue = _options.getInputValue;
     this.getMappingValue = _options.getMappingValue;
   }
