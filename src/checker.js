@@ -5,10 +5,13 @@ import And from './and';
 import Or from './or';
 import index from './';
 
-type Checker = Object => boolean
-type ConjunctionType = And | Or
+type Checker = Object => boolean;
+type ConjunctionType = And | Or;
 
-const predicateObjectIsSatisfiedWithInputValue = (predicateObject, inputValue, collectTruth) => {
+/**
+ * Check if the given predicate object is satisfied with the input value.
+ */
+const predicateObjectIsSatisfiedWithInputValue = (predicateObject: any, inputValue: any, collectTruth: Function): boolean => {
   if (R.is(Array, predicateObject)) {
     return collectTruth(
       _predicateObject => {
@@ -16,12 +19,14 @@ const predicateObjectIsSatisfiedWithInputValue = (predicateObject, inputValue, c
       },
       predicateObject
     );
-  } else {
+  } else if (R.is(Object, predicateObject)) {
     const key = R.head(R.keys(predicateObject));
     const mappingValue = predicateObject[key];
     const predicate = getPredicateFunction(key);
 
     return predicate(inputValue, mappingValue);
+  } else { // Scalar value -> 'a', for backward compatibility we need to convert it to object
+    return predicateObjectIsSatisfiedWithInputValue({'===': predicateObject}, inputValue, collectTruth);
   }
 }
 
