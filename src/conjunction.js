@@ -12,19 +12,28 @@ export type ConjunctionObject = {
   mappings: ConjunctionObject
 };
 
+/**
+ * Cast the given function's parameters to number.
+ */
+const castParametersToNumbers = (f: (number, number) => boolean) => {
+  return (x: any, y: any): boolean => {
+    return f(Number(x), Number(y));
+  };
+};
+
 const predicateByAlias: {[id: string]: Function} = {
-  '>': R.gt,
-  '>=': R.gte,
+  '>': castParametersToNumbers(R.gt),
+  '>=': castParametersToNumbers(R.gte),
   '===': R.equals,
   '!==': R.compose(R.not, R.equals),
-  '<': R.lt,
-  '<=': R.lte,
-  '$greaterThan': R.gt,
-  '$greaterThanOrEqual': R.gte,
+  '<': castParametersToNumbers(R.lt),
+  '<=': castParametersToNumbers(R.lte),
+  '$greaterThan': castParametersToNumbers(R.gt),
+  '$greaterThanOrEqual': castParametersToNumbers(R.gte),
   '$equal': R.equals,
   '$notEqual': R.compose(R.not, R.equals),
-  '$lessThan': R.lt,
-  '$lessThanOrEqual': R.lte
+  '$lessThan': castParametersToNumbers(R.lt),
+  '$lessThanOrEqual': castParametersToNumbers(R.lte)
 };
 
 /**
