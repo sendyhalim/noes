@@ -1,5 +1,8 @@
 // @flow
-import R from 'ramda';
+import compose from 'ramda/src/compose';
+import equals from 'ramda/src/equals';
+import prop from 'ramda/src/prop';
+
 import And from './and';
 import Or from './or';
 import {Conjunction} from './conjunction';
@@ -11,9 +14,9 @@ import type {ConjunctionObject} from './conjunction';
  * @param {ConjunctionObject} obj
  * @returns {Boolean}
  */
-const objectIsAndConjunction: (ConjunctionObject) => boolean = R.compose(
-  R.equals(And.type()),
-  R.prop('type')
+const objectIsAndConjunction: (ConjunctionObject) => boolean = compose(
+  equals(And.type()),
+  prop('type')
 );
 
 
@@ -22,9 +25,9 @@ const objectIsAndConjunction: (ConjunctionObject) => boolean = R.compose(
  * @param {ConjunctionObject} obj
  * @returns {Boolean}
  */
-const objectIsOrConjunction: (ConjunctionObject) => boolean = R.compose(
-  R.equals(Or.type()),
-  R.prop('type')
+const objectIsOrConjunction: (ConjunctionObject) => boolean = compose(
+  equals(Or.type()),
+  prop('type')
 );
 
 const create = (obj: ConjunctionObject, options?: Object): Object => {
