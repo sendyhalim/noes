@@ -1,5 +1,8 @@
 // @flow
-import R from 'ramda';
+import head from 'ramda/src/head';
+import is from 'ramda/src/is';
+import keys from 'ramda/src/keys';
+
 import {Conjunction, getPredicateFunction} from './conjunction';
 import And from './and';
 import Or from './or';
@@ -12,15 +15,15 @@ type ConjunctionType = And | Or;
  * Check if the given predicate object is satisfied with the input value.
  */
 const predicateObjectIsSatisfiedWithInputValue = (predicateObject: any, inputValue: any, collectTruth: Function): boolean => {
-  if (R.is(Array, predicateObject)) {
+  if (is(Array, predicateObject)) {
     return collectTruth(
       _predicateObject => {
         return predicateObjectIsSatisfiedWithInputValue(_predicateObject, inputValue, collectTruth)
       },
       predicateObject
     );
-  } else if (R.is(Object, predicateObject)) {
-    const key = R.head(R.keys(predicateObject));
+  } else if (is(Object, predicateObject)) {
+    const key = head(keys(predicateObject));
     const mappingValue = predicateObject[key];
     const predicate = getPredicateFunction(key);
 
@@ -51,7 +54,7 @@ const createEqualInputChecker = (conjunction: ConjunctionType, inputObj: Object)
         getInputValue: conjunction.getInputValue,
         getMappingValue: conjunction.getInputValue
       }).satisfied(inputObj);
-    } else if (R.is(Object, mappingValue)) {
+    } else if (is(Object, mappingValue)) {
       const collectTruth = conjunction.truthCollectingFunction();
 
       return predicateObjectIsSatisfiedWithInputValue(mappingValue, inputValue, collectTruth);

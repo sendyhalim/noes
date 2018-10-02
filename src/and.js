@@ -1,5 +1,7 @@
 // @flow
-import R from 'ramda';
+import all from 'ramda/src/all';
+import keys from 'ramda/src/keys';
+
 import {Conjunction} from './conjunction';
 import checker from './checker';
 
@@ -26,11 +28,11 @@ class And extends Conjunction {
     const equalInput = checker.createEqualInputChecker(this, inputObj);
     const collectTruth = this.truthCollectingFunction();
 
-    return collectTruth(equalInput, R.keys(this.mappings));
+    return collectTruth(equalInput, keys(this.mappings));
   }
 
   truthCollectingFunction(): Function {
-    return R.all;
+    return all;
   }
 
   static type(): string {

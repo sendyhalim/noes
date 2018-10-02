@@ -1,5 +1,15 @@
 // @flow
-import R from 'ramda';
+import gt from 'ramda/src/gt';
+import gte from 'ramda/src/gte';
+import equals from 'ramda/src/equals';
+import lt from 'ramda/src/lt';
+import lte from 'ramda/src/lte';
+import has from 'ramda/src/has';
+import compose from 'ramda/src/compose';
+import prop from 'ramda/src/prop';
+import or from 'ramda/src/or';
+import mergeWith from 'ramda/src/mergeWith';
+import not from 'ramda/src/not';
 
 export type ConjunctionOptions = {
   valueIsSatisfied?: Function | String,
@@ -22,18 +32,18 @@ const castParametersToNumbers = (f: (number, number) => boolean) => {
 };
 
 const predicateByAlias: {[id: string]: Function} = {
-  '>': castParametersToNumbers(R.gt),
-  '>=': castParametersToNumbers(R.gte),
-  '===': R.equals,
-  '!==': R.compose(R.not, R.equals),
-  '<': castParametersToNumbers(R.lt),
-  '<=': castParametersToNumbers(R.lte),
-  '$greaterThan': castParametersToNumbers(R.gt),
-  '$greaterThanOrEqual': castParametersToNumbers(R.gte),
-  '$equal': R.equals,
-  '$notEqual': R.compose(R.not, R.equals),
-  '$lessThan': castParametersToNumbers(R.lt),
-  '$lessThanOrEqual': castParametersToNumbers(R.lte)
+  '>': castParametersToNumbers(gt),
+  '>=': castParametersToNumbers(gte),
+  '===': equals,
+  '!==': compose(not, equals),
+  '<': castParametersToNumbers(lt),
+  '<=': castParametersToNumbers(lte),
+  '$greaterThan': castParametersToNumbers(gt),
+  '$greaterThanOrEqual': castParametersToNumbers(gte),
+  '$equal': equals,
+  '$notEqual': compose(not, equals),
+  '$lessThan': castParametersToNumbers(lt),
+  '$lessThanOrEqual': castParametersToNumbers(lte)
 };
 
 /**
@@ -43,7 +53,7 @@ const predicateByAlias: {[id: string]: Function} = {
 export const getPredicateFunction: (Function | string) => Function = predicate => {
   if (typeof predicate === 'function') {
     return predicate;
-  } else if (R.has(predicate, predicateByAlias)){
+  } else if (has(predicate, predicateByAlias)){
     return predicateByAlias[predicate];
   } else {
     throw new Error(`${predicate} is not a valid predicate`);
@@ -64,12 +74,12 @@ export class Conjunction {
     this.mappings = mappings;
 
     const defaultOptions = {
-      valueIsSatisfied: R.equals,
-      getInputValue: R.prop,
-      getMappingValue: R.prop
+      valueIsSatisfied: equals,
+      getInputValue: prop,
+      getMappingValue: prop
     };
 
-    const _options = R.mergeWith(R.or, options, defaultOptions);
+    const _options = mergeWith(or, options, defaultOptions);
 
     this.valueIsSatisfied = getPredicateFunction(_options.valueIsSatisfied);
     this.getInputValue = _options.getInputValue;
@@ -94,7 +104,7 @@ export class Conjunction {
    */
   static shouldCreateConjunction(obj: Object): boolean {
     return !Conjunction.isConjunction(obj) &&
-      R.has('type', obj) &&
-      R.has('mappings', obj);
+      has('type', obj) &&
+      has('mappings', obj);
   }
 }
